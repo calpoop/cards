@@ -86,7 +86,7 @@ public class Solitaire : MonoBehaviour
             float zOffset = 0.03f;
             foreach (string card in bottoms[i])
             {
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.03f);
                 GameObject newCard = Instantiate(cardPrefab, new Vector3(bottomPos[i].transform.position.x, bottomPos[i].transform.position.y - yOffset, bottomPos[i].transform.position.z - zOffset), Quaternion.identity, bottomPos[i].transform);
                 newCard.name = card;
                 if (card == bottoms[i][bottoms[i].Count - 1])
