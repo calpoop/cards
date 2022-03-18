@@ -47,7 +47,7 @@ public class Solitaire : MonoBehaviour
             print(card);
         }
         SolitaireSort();
-        SolitaireDeal();
+        StartCoroutine(SolitaireDeal());
     }
 
     public static List<string> GenerateDeck()
@@ -77,7 +77,7 @@ public class Solitaire : MonoBehaviour
         }
     }
 
-    void SolitaireDeal()
+    IEnumerator SolitaireDeal()
     {
         for (int i = 0; i < 7; i++)
         {
@@ -86,6 +86,7 @@ public class Solitaire : MonoBehaviour
             float zOffset = 0.03f;
             foreach (string card in bottoms[i])
             {
+                yield return new WaitForSeconds(0.01f);
                 GameObject newCard = Instantiate(cardPrefab, new Vector3(bottomPos[i].transform.position.x, bottomPos[i].transform.position.y - yOffset, bottomPos[i].transform.position.z - zOffset), Quaternion.identity, bottomPos[i].transform);
                 newCard.name = card;
                 if (card == bottoms[i][bottoms[i].Count - 1])
