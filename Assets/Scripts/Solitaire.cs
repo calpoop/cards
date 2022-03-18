@@ -8,12 +8,23 @@ public class Solitaire : MonoBehaviour
     public GameObject cardPrefab;
     public static string[] suits = new string[] {"C", "D", "H", "S"};
     public static string[] values = new string[] {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    public List<string>[] bottoms;
+    public List<string>[] tops;
+
+    private List<string> bottom0 = new List<string>();
+    private List<string> bottom1 = new List<string>();
+    private List<string> bottom2 = new List<string>();
+    private List<string> bottom3 = new List<string>();
+    private List<string> bottom4 = new List<string>();
+    private List<string> bottom5 = new List<string>();
+    private List<string> bottom6 = new List<string>();
 
     public List<string> deck;
 
     // Start is called before the first frame update
     void Start()
     {
+        bottoms = new List<string>[] { bottom0, bottom1, bottom2, bottom3, bottom4, bottom5, bottom6 };
         PlayCards();
     }
 
@@ -31,6 +42,7 @@ public class Solitaire : MonoBehaviour
         {
             print(card);
         }
+        SolitaireDeal();
     }
 
     public static List<string> GenerateDeck()
@@ -57,6 +69,21 @@ public class Solitaire : MonoBehaviour
             T temp = list[k];
             list[k] = list[n];
             list[n] = temp;
+        }
+    }
+
+    void SolitaireDeal()
+    {
+        float yOffset = 0;
+        float zOffset = 0.03f;
+        foreach (string card in deck)
+        {
+            GameObject newCard = Instantiate(cardPrefab, new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z - zOffset), Quaternion.identity);
+            newCard.name = card;
+            newCard.GetComponent<Selectable>().faceUp = true;
+
+            yOffset = yOffset + 0.3f;
+            zOffset = zOffset + 0.03f;
         }
     }
 }
