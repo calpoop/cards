@@ -80,10 +80,23 @@ public class UserInput : MonoBehaviour
             slot1 = selected;            
         }
             // if there is already a card selected (and it is not the same card)
+        else if (slot1 != selected)
+        {
+
                 // if the new card is eligible to stack on the old card
+                if (Stackable(selected))
+                {
                     // stack it
+
+                }
+                else
+                {
                 // else
                     // select the new card
+                    slot1 = selected;
+                }
+                
+        }
             // else if there is already a card slected and it is the same card
                 // if the time is short enough then it is a double click
                     // if the card is eligible to fly to top then do it
@@ -97,5 +110,59 @@ public class UserInput : MonoBehaviour
     void Bottom()
     {
         print("Clicked on Bottom");
+    }
+
+    bool Stackable(GameObject selected)
+    {
+        Selectable s1 = slot1.GetComponent<Selectable>();
+        Selectable s2 = selected.GetComponent<Selectable>();
+        // compare them to see if they stack
+
+        // if in the top pile must stack suited Ace to King
+        if (s2.top)
+        {
+            if (s1.suit == s2.suit || (s1.value == 1 && s2.suit == null))
+            {
+                if (s1.value == s2.value + 1)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        // if in the bottom pile must stack alternate colors King to Ace
+        else
+        {
+            if (s1.value == s2.value - 1)
+            {
+                bool card1Red = true;
+                bool card2Red = true;
+
+                if (s1.suit == "C" || s1.suit == "S")
+                {
+                    card1Red = false;
+                }
+
+                if (s2.suit == "C" || s2.suit == "S")
+                {
+                    card2Red = false;
+                }
+                if (card1Red == card2Red)
+                {
+                    print("Not stackable");
+                    return false;
+                }
+                else
+                {
+                    print("Stackable");
+                    return true;
+                }
+            }
+        }
+
+       return false;
     }
 }
